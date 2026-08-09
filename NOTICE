@@ -1,0 +1,11 @@
+WeatherNext Local
+Copyright 2026 Gustavo Rubim
+
+This project integrates with, but does not vendor, Google DeepMind's
+WeatherNext v0.3.0 research code. WeatherNext code and notebooks are made
+available under Apache License 2.0. Released model weights and other materials
+are made available under CC BY 4.0. See:
+https://github.com/google-deepmind/weathernext
+
+WeatherNext models are experimental research artifacts and are not official
+weather forecasts, alerts, or warnings.

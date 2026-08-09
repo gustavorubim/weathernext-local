@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "weathernext-local"
+version = "0.1.0"
+description = "Run the official WeatherNext 2 Mini research model on a local NVIDIA GPU and inspect forecast precipitation."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Gustavo Rubim" }]
+dependencies = [
+  "dash>=3.2,<4",
+  "dash-leaflet>=1.1,<2",
+  "h5py>=3.14,<4",
+  "h5netcdf>=1.6,<2",
+  "matplotlib>=3.10,<4",
+  "numpy>=2.0,<3",
+  "plotly>=6.3,<7",
+  "psutil>=7,<8",
+  "pydantic>=2.11,<3",
+  "typer>=0.16,<1",
+  "xarray>=2025.1,<=2026.2.0",
+]
+
+[project.optional-dependencies]
+model = [
+  "jax[cuda13]>=0.7,<0.9; sys_platform == 'linux'",
+  "weathernext @ git+https://github.com/google-deepmind/weathernext.git@89c4b2a77a1c57b328b909c575550fd2e5aadc9c ; sys_platform == 'linux'",
+]
+dev = [
+  "pytest>=8.4,<9",
+  "pytest-cov>=6.2,<7",
+  "ruff>=0.12,<1",
+]
+
+[project.scripts]
+wnx = "weathernext_local.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/weathernext_local"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.uv]
+package = true
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers -p no:cacheprovider"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["E501"]
